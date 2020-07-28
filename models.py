@@ -1,29 +1,22 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 import os
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
 
 
-
-
-
 def setup_db(app):
     DATABASE_URL="postgres://rgvvwpuyhdcstc:34ae583b7756c16ebe0dd518abaf1f0371b5c204acfac13d494587c73e6c1dec@ec2-50-16-198-4.compute-1.amazonaws.com:5432/dabcijcqn92gnv"
-    #database_name = "agency"
-    #database_path = "postgres://{}:{}@{}/{}".format('postgres','Password@123' , 'localhost:5432', database_name)
-    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL #database_path #os.environ['DATABASE_URL']
+    # database_name = "agency"
+    # database_path = "postgres://{}:{}@{}/{}".format('postgres','Password@123', 'localhost:5432', database_name)
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL # database_path # os.environ['DATABASE_URL']
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
 
-    
-    
-
-
 
 class Movie(db.Model):
-    #this is the movie table in my database . It will have a one to many relationship with the actors table since there are many actors to one movie 
+    # Movie table with one to many relationship with actors
     __tablename__ = 'movies'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
@@ -35,13 +28,13 @@ class Movie(db.Model):
             'id': self.id,
             'title': self.title,
             'release_date': self.release_date,
-            'actors': self.actors        
+            'actors': self.actors
         }
-    
+
     def insert(self):
         db.session.add(self)
         db.session.commit()
-    
+
     def update(self):
         db.session.commit()
 
@@ -49,9 +42,10 @@ class Movie(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+
 class Actor(db.Model):
-    #this would be the actors table. It will be the child of the Movie table
-    __tablename__ = 'actors' 
+    # Actors table which is the child of the movie table
+    __tablename__ = 'actors'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     age = db.Column(db.Integer)
@@ -66,10 +60,11 @@ class Actor(db.Model):
             'gender': self.gender,
             'movie_id': self.movie_id
         }
+
     def insert(self):
         db.session.add(self)
         db.session.commit()
-    
+
     def update(self):
         db.session.commit()
 
