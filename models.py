@@ -6,9 +6,9 @@ db = SQLAlchemy()
 
 
 def setup_db(app):
-    DATABASE_URL="postgres://rgvvwpuyhdcstc:34ae583b7756c16ebe0dd518abaf1f0371b5c204acfac13d494587c73e6c1dec@ec2-50-16-198-4.compute-1.amazonaws.com:5432/dabcijcqn92gnv"
+    DATABASE_URL="{}"
     # database_name = "agency"
-    # database_path = "postgres://{}:{}@{}/{}".format('postgres','Password@123', 'localhost:5432', database_name)
+    # database_path = "postgres://{}:{}@{}/{}".format({},{}, 'localhost:5432', database_name)
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL # database_path # os.environ['DATABASE_URL']
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
